@@ -88,7 +88,7 @@ else:
         with utils.catchtime('Brute Force') as t:
             w_gt = sbh.eval_barnes_hut_smoothdist(octree1, eval_grid, np.inf)
         w_gt = -np.log(w_gt)/alpha
-    t_gt = t()
+    t_gt = 1000*t()
 print(f'brute force took {t_gt} ms')
 
 if args.gpu_mode:
@@ -114,7 +114,7 @@ else:
         with utils.catchtime('Barnes-Hut') as t:
             w_bh_shuffled = sbh.eval_barnes_hut_smoothdist(octree1, eval_grid_shuffled, 2)
         w_bh_shuffled = -np.log(w_bh_shuffled)/alpha
-    t_bh = t()
+    t_bh = 1000*t()
 print(f'Barnes-Hut took {t_bh} ms')
 w_bh = w_bh_shuffled[unshuffle_idxs]
 w_bh_err = np.abs(w_bh - w_gt)
@@ -143,7 +143,7 @@ else:
         with utils.catchtime('Stochastic Barnes-Hut') as t:
             w_mlpcv_shuffled, _ = sbh.multi_level_prefix_control_variate_smoothdist(octree2, eval_grid_shuffled, 1)
         w_mlpcv_shuffled = -np.log(w_mlpcv_shuffled)/alpha
-    t_mlpcv = t()
+    t_mlpcv = 1000*t()
 print(f'Stochastic Barnes-Hut took {t_mlpcv} ms')
 w_mlpcv = w_mlpcv_shuffled[unshuffle_idxs]
 w_mlpcv_err = np.abs(w_mlpcv - w_gt)
